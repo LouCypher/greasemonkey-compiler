@@ -154,7 +154,7 @@ var \$shortname_gmCompiler={
 // used under GPL permission
 //
 // most everything else below based heavily off of Greasemonkey
-// http://greasemonkey.devjavu.com/
+// https://github.com/greasemonkey/greasemonkey
 // used under GPL permission
 
 getUrlContents: function(aUrl){
@@ -233,6 +233,7 @@ injectScript: function(script, url, unsafeContentWin) {
 	sandbox.GM_addStyle=function(css) { \$shortname_gmCompiler.addStyle(sandbox.document, css) };
 	sandbox.GM_setValue=\$shortname_gmCompiler.hitch(storage, "setValue");
 	sandbox.GM_getValue=\$shortname_gmCompiler.hitch(storage, "getValue");
+	sandbox.GM_deleteValue=\$shortname_gmCompiler.hitch(storage, "deleteValue");
 	sandbox.GM_openInTab=\$shortname_gmCompiler.hitch(this, "openInTab", unsafeContentWin);
 	sandbox.GM_xmlhttpRequest=\$shortname_gmCompiler.hitch(
 		xmlhttpRequester, "contentStartRequest"
@@ -388,7 +389,9 @@ function \$shortname_ScriptStorage() {
 \$shortname_ScriptStorage.prototype.getValue = function(name, defVal) {
 	return this.prefMan.getValue(name, defVal);
 }
-
+\$shortname_ScriptStorage.prototype.deleteValue = function(name) {
+	return this.prefMan.remove(name);
+}
 
 window.addEventListener('load', \$shortname_gmCompiler.onLoad, false);
 window.addEventListener('unload', \$shortname_gmCompiler.onUnLoad, false);
@@ -651,11 +654,11 @@ input, textarea {
 </tr>
 <tr>
 	<td>Firefox min version:</td>
-	<td><input type='text' name='minVersion' value='2.0' /></td>
+	<td><input type='text' name='minVersion' value='4.0' /></td>
 </tr>
 <tr>
 	<td>Firefox max version:</td>
-	<td><input type='text' name='maxVersion' value='19.*' /></td>
+	<td><input type='text' name='maxVersion' value='20.*' /></td>
 </tr>
 <tr>
 	<td>User script:</td>
